@@ -107,7 +107,7 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
         'building_desc': 'عمارات سكنية وأراضي استثمارية مميزة',
         'whatsapp_title': 'تواصل مع مستشار العقارات',
         'consultant1': 'أ. مقرن - مستشار عقاري أول',
-        'consultant2': 'أ. عبدالله الطخيم - مستشارة الفيلات الفاخرة',
+        'consultant2': 'أ. عبدالله الطخيم - مستشار الفيلات الفاخرة',
         'consultant3': 'علي العطاس - مستشار الأبراج التجارية',
         'contact_phone_title': 'اتصل بنا',
         'contact_phone_desc': 'متاح 24/7',
