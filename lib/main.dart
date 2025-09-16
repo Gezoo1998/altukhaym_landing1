@@ -40,10 +40,12 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
   late AnimationController _particleController;
   late Animation<double> _fadeAnimation;
   late ScrollController _scrollController;
+  String _phoneNumber = '966535695919'; // Default phone number
 
   @override
   void initState() {
     super.initState();
+    _initializePhoneNumber();
     _animationController = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
@@ -60,6 +62,14 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
 
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+  }
+
+  void _initializePhoneNumber() {
+    final uri = Uri.parse(html.window.location.href);
+    final phoneParam = uri.queryParameters['phone'];
+    if (phoneParam != null && phoneParam.isNotEmpty) {
+      _phoneNumber = phoneParam;
+    }
   }
 
   void _scrollListener() {
@@ -417,14 +427,14 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
                 // Header section
                 Container(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 80,
+                    vertical: 20,
                     horizontal: 20,
                   ),
                   child: Column(
                     children: [
                       // Logo
                       Container(
-                        margin: const EdgeInsets.only(bottom: 30),
+                        margin: const EdgeInsets.only(bottom: 10),
                         child: Image.asset(
                           'assets/images/logo2.png',
                           height: MediaQuery.of(context).size.width > 600
@@ -496,7 +506,7 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
                           );
                         },
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       // Slogan with gradient white
                       ShaderMask(
                         shaderCallback: (bounds) => const LinearGradient(
@@ -542,82 +552,61 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
                   ),
                 ),
                 // WhatsApp buttons section
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      ShaderMask(
-                        shaderCallback: (bounds) => const LinearGradient(
-                          colors: [
-                            Colors.white,
-                            Color(0xFFF5F5F5),
-                            Color(0xFFE8E8E8),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ).createShader(bounds),
-                        child: Text(
-                          'تواصل مع مستشارينا العقاريين',
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width > 600
-                                ? 34
-                                : 28,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(
-                                offset: const Offset(0, 0),
-                                blurRadius: 15,
-                                color: Colors.black.withOpacity(0.4),
-                              ),
-                              Shadow(
-                                offset: const Offset(1, 1),
-                                blurRadius: 3,
-                                color: Colors.black.withOpacity(0.3),
-                              ),
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        ShaderMask(
+                          shaderCallback: (bounds) => const LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Color(0xFFF5F5F5),
+                              Color(0xFFE8E8E8),
                             ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ).createShader(bounds),
+                          child: Text(
+                            'تواصل مع مستشارينا العقاريين',
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width > 600
+                                  ? 34
+                                  : 28,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                              shadows: [
+                                Shadow(
+                                  offset: const Offset(0, 0),
+                                  blurRadius: 15,
+                                  color: Colors.black.withOpacity(0.4),
+                                ),
+                                Shadow(
+                                  offset: const Offset(1, 1),
+                                  blurRadius: 3,
+                                  color: Colors.black.withOpacity(0.3),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      const SizedBox(height: 80),
-                      // WhatsApp buttons
-                      _buildLuxuryWhatsAppButton(
-                        context,
-                        _getTexts()['whatsapp_title']!,
-                        _getTexts()['consultant1']!,
-                        SvgPicture.asset(
-                          'assets/images/whatsapp_icon.svg',
-                          width: 32,
-                          height: 32,
+                        const SizedBox(height: 30),
+                        // Single WhatsApp button
+                        _buildLuxuryWhatsAppButton(
+                          context,
+                          'اضغط للتواصل مع فريق المبيعات',
+                          '',
+                          SvgPicture.asset(
+                            'assets/images/whatsapp_icon.svg',
+                            width: 32,
+                            height: 32,
+                          ),
+                          'https://wa.me/$_phoneNumber',
                         ),
-                        'https://wa.me/966563559911',
-                      ),
-                      const SizedBox(height: 25),
-                      _buildLuxuryWhatsAppButton(
-                        context,
-                        _getTexts()['whatsapp_title']!,
-                        _getTexts()['consultant2']!,
-                        SvgPicture.asset(
-                          'assets/images/whatsapp_icon.svg',
-                          width: 32,
-                          height: 32,
-                        ),
-                        'https://wa.me/966535695919',
-                      ),
-                      const SizedBox(height: 25),
-                      _buildLuxuryWhatsAppButton(
-                        context,
-                        _getTexts()['whatsapp_title']!,
-                        _getTexts()['consultant3']!,
-                        SvgPicture.asset(
-                          'assets/images/whatsapp_icon.svg',
-                          width: 32,
-                          height: 32,
-                        ),
-                        'https://wa.me/966541431657',
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 80),
@@ -912,7 +901,7 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
                                 _buildEnhancedContactCard(
                                   Icons.email_rounded,
                                   _getTexts()['contact_email_title']!,
-                                  'info@altakheem-realestate.com',
+                                  'altukhaymglobal@gmail.com',
                                   _getTexts()['contact_email_desc']!,
                                   const Color(0xFF2196F3),
                                 ),
@@ -1096,17 +1085,20 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 6),
-                          Text(
-                            subtitle,
-                            style: GoogleFonts.cairo(
-                              color: const Color(0xFF5D4E37),
-                              fontSize: MediaQuery.of(context).size.width > 600
-                                  ? 16
-                                  : 14,
-                              fontWeight: FontWeight.w500,
+                          if (subtitle.isNotEmpty) ...[
+                            const SizedBox(height: 6),
+                            Text(
+                              subtitle,
+                              style: GoogleFonts.cairo(
+                                color: const Color(0xFF5D4E37),
+                                fontSize:
+                                    MediaQuery.of(context).size.width > 600
+                                    ? 16
+                                    : 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
+                          ],
                         ],
                       ),
                     ),
@@ -1367,12 +1359,6 @@ class ParticlesPainter extends CustomPainter {
       ..color = const Color(0xFFFFD700).withOpacity(0.4)
       ..style = PaintingStyle.fill;
 
-
-
-
-
-
-
     // Energy Wave Patterns
     final waveColors = [
       const Color(0xFF00E5FF), // Cyan
@@ -1380,13 +1366,12 @@ class ParticlesPainter extends CustomPainter {
       const Color(0xFF76FF03), // Light Green
     ];
 
-
-
     // Draw vertical energy streams
     for (int i = 0; i < 2; i++) {
-      final streamX = size.width * (0.3 + i * 0.4) +
+      final streamX =
+          size.width * (0.3 + i * 0.4) +
           20 * math.sin(animationValue * 1.2 * math.pi + i * 0.8);
-      
+
       _drawEnergyStream(
         canvas,
         Offset(streamX % size.width, 0),
@@ -1395,17 +1380,14 @@ class ParticlesPainter extends CustomPainter {
         waveColors[i],
       );
     }
-
-
-
-
-
-
-
-
   }
 
-  void _drawHouse(Canvas canvas, Offset center, double size, [Color? houseColor]) {
+  void _drawHouse(
+    Canvas canvas,
+    Offset center,
+    double size, [
+    Color? houseColor,
+  ]) {
     final baseColor = houseColor ?? const Color(0xFFFF6B35);
     final housePaint = Paint()
       ..color = baseColor.withOpacity(0.4)
@@ -1662,7 +1644,14 @@ class ParticlesPainter extends CustomPainter {
     canvas.drawPath(path, outlinePaint);
   }
 
-  void _drawDiagonalEnergyStream(Canvas canvas, Offset start, double width, double height, double phase, Color color) {
+  void _drawDiagonalEnergyStream(
+    Canvas canvas,
+    Offset start,
+    double width,
+    double height,
+    double phase,
+    Color color,
+  ) {
     final paint = Paint()
       ..color = color.withOpacity(0.2)
       ..style = PaintingStyle.stroke
@@ -1671,117 +1660,148 @@ class ParticlesPainter extends CustomPainter {
     final path = Path();
     final amplitude = 8.0;
     final frequency = 0.04;
-    
+
     for (double t = 0; t <= 1.0; t += 0.03) {
-      final x = start.dx + (width * t) + amplitude * math.sin((t * 10 + phase * 2 * math.pi));
-      final y = start.dy + (height * t) + amplitude * math.cos((t * 8 + phase * 2 * math.pi));
-      
+      final x =
+          start.dx +
+          (width * t) +
+          amplitude * math.sin((t * 10 + phase * 2 * math.pi));
+      final y =
+          start.dy +
+          (height * t) +
+          amplitude * math.cos((t * 8 + phase * 2 * math.pi));
+
       if (t == 0) {
         path.moveTo(x, y);
       } else {
         path.lineTo(x, y);
       }
     }
-    
+
     canvas.drawPath(path, paint);
-    
+
     // Add flowing particles
     for (double t = 0; t <= 1.0; t += 0.25) {
-      final x = start.dx + (width * t) + amplitude * math.sin((t * 10 + phase * 2 * math.pi));
-      final y = start.dy + (height * t) + amplitude * math.cos((t * 8 + phase * 2 * math.pi));
-      
+      final x =
+          start.dx +
+          (width * t) +
+          amplitude * math.sin((t * 10 + phase * 2 * math.pi));
+      final y =
+          start.dy +
+          (height * t) +
+          amplitude * math.cos((t * 8 + phase * 2 * math.pi));
+
       final particlePaint = Paint()
         ..color = color.withOpacity(0.4)
         ..style = PaintingStyle.fill;
-      
+
       final particleSize = 1.0 + 0.3 * math.sin(phase * 3 * math.pi + t * 5);
       canvas.drawCircle(Offset(x, y), particleSize, particlePaint);
     }
   }
 
-  void _drawEnergyOrb(Canvas canvas, Offset center, double radius, double phase, Color color) {
+  void _drawEnergyOrb(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    double phase,
+    Color color,
+  ) {
     // Draw outer pulsing aura
     final auraPaint = Paint()
       ..color = color.withOpacity(0.1)
       ..style = PaintingStyle.fill
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0);
-    
+
     final auraRadius = radius * (1.3 + 0.2 * math.sin(phase * 3 * math.pi));
     canvas.drawCircle(center, auraRadius, auraPaint);
-    
+
     // Draw main orb with gradient effect
     final orbPaint = Paint()
       ..color = color.withOpacity(0.4)
       ..style = PaintingStyle.fill;
-    
+
     final mainRadius = radius * (1.0 + 0.1 * math.sin(phase * 4 * math.pi));
     canvas.drawCircle(center, mainRadius, orbPaint);
-    
+
     // Draw bright core
     final corePaint = Paint()
       ..color = Colors.white.withOpacity(0.5)
       ..style = PaintingStyle.fill;
-    
+
     final coreRadius = radius * 0.3;
     canvas.drawCircle(center, coreRadius, corePaint);
-    
+
     // Draw energy sparks
     for (int i = 0; i < 3; i++) {
       final sparkAngle = (i * 2 * math.pi / 3) + (phase * 2 * math.pi);
-      final sparkDistance = mainRadius + 6 + 3 * math.sin(phase * 4 * math.pi + i);
+      final sparkDistance =
+          mainRadius + 6 + 3 * math.sin(phase * 4 * math.pi + i);
       final sparkX = center.dx + sparkDistance * math.cos(sparkAngle);
       final sparkY = center.dy + sparkDistance * math.sin(sparkAngle);
-      
+
       final sparkPaint = Paint()
         ..color = color.withOpacity(0.5)
         ..style = PaintingStyle.fill;
-      
+
       canvas.drawCircle(Offset(sparkX, sparkY), 1.0, sparkPaint);
     }
   }
 
-  void _drawEnergyCircle(Canvas canvas, Offset center, double radius, double phase, Color color) {
+  void _drawEnergyCircle(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    double phase,
+    Color color,
+  ) {
     // Draw outer glow ring
     final glowPaint = Paint()
       ..color = color.withOpacity(0.3)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 8.0
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0);
-    
+
     final animatedRadius = radius + 5 * math.sin(phase * 2 * math.pi);
     canvas.drawCircle(center, animatedRadius, glowPaint);
-    
+
     // Draw main energy circle
     final mainPaint = Paint()
       ..color = color.withOpacity(0.7)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0;
-    
+
     canvas.drawCircle(center, animatedRadius * 0.8, mainPaint);
-    
+
     // Draw inner pulsing core
     final corePaint = Paint()
       ..color = color.withOpacity(0.9)
       ..style = PaintingStyle.fill;
-    
+
     final coreRadius = (radius * 0.3) + 3 * math.sin(phase * 3 * math.pi);
     canvas.drawCircle(center, coreRadius, corePaint);
-    
+
     // Draw energy particles around the circle
     for (int i = 0; i < 6; i++) {
       final angle = (i * 2 * math.pi / 6) + (phase * 2 * math.pi);
       final particleX = center.dx + (animatedRadius + 10) * math.cos(angle);
       final particleY = center.dy + (animatedRadius + 10) * math.sin(angle);
-      
+
       final particlePaint = Paint()
         ..color = color.withOpacity(0.8)
         ..style = PaintingStyle.fill;
-      
+
       canvas.drawCircle(Offset(particleX, particleY), 2.0, particlePaint);
     }
   }
 
-  void _drawEnergyWave(Canvas canvas, Offset center, double width, double phase, Color color) {
+  void _drawEnergyWave(
+    Canvas canvas,
+    Offset center,
+    double width,
+    double phase,
+    Color color,
+  ) {
     final paint = Paint()
       ..color = color.withOpacity(0.25)
       ..style = PaintingStyle.stroke
@@ -1790,29 +1810,37 @@ class ParticlesPainter extends CustomPainter {
     final path = Path();
     final amplitude = 15.0;
     final frequency = 0.02;
-    
+
     for (double x = 0; x <= width; x += 2) {
-      final y = center.dy + amplitude * math.sin((x * frequency + phase * 2 * math.pi));
+      final y =
+          center.dy +
+          amplitude * math.sin((x * frequency + phase * 2 * math.pi));
       if (x == 0) {
         path.moveTo(center.dx + x - width / 2, y);
       } else {
         path.lineTo(center.dx + x - width / 2, y);
       }
     }
-    
+
     canvas.drawPath(path, paint);
-    
+
     // Add glow effect
     final glowPaint = Paint()
       ..color = color.withOpacity(0.15)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.0
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);
-    
+
     canvas.drawPath(path, glowPaint);
   }
 
-  void _drawEnergyStream(Canvas canvas, Offset start, double height, double phase, Color color) {
+  void _drawEnergyStream(
+    Canvas canvas,
+    Offset start,
+    double height,
+    double phase,
+    Color color,
+  ) {
     final paint = Paint()
       ..color = color.withOpacity(0.2)
       ..style = PaintingStyle.stroke
@@ -1821,25 +1849,29 @@ class ParticlesPainter extends CustomPainter {
     final path = Path();
     final amplitude = 10.0;
     final frequency = 0.03;
-    
+
     for (double y = 0; y <= height; y += 4) {
-      final x = start.dx + amplitude * math.sin((y * frequency + phase * 2 * math.pi));
+      final x =
+          start.dx +
+          amplitude * math.sin((y * frequency + phase * 2 * math.pi));
       if (y == 0) {
         path.moveTo(x, start.dy + y);
       } else {
         path.lineTo(x, start.dy + y);
       }
     }
-    
+
     canvas.drawPath(path, paint);
-    
+
     // Add particles along the stream
     for (double y = 0; y <= height; y += 60) {
-      final x = start.dx + amplitude * math.sin((y * frequency + phase * 2 * math.pi));
+      final x =
+          start.dx +
+          amplitude * math.sin((y * frequency + phase * 2 * math.pi));
       final particlePaint = Paint()
         ..color = color.withOpacity(0.4)
         ..style = PaintingStyle.fill;
-      
+
       canvas.drawCircle(Offset(x, start.dy + y), 1.5, particlePaint);
     }
   }
