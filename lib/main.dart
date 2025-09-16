@@ -1471,115 +1471,104 @@ class ParticlesPainter extends CustomPainter {
       }
     }
 
-    // Real Estate Objects with different colors
-    final buildingColors = [
-      const Color(0xFFFFD700), // Gold
-      const Color(0xFF4CAF50), // Green
-      const Color(0xFF2196F3), // Blue
-    ];
-    
-    final outlineColors = [
-      const Color(0xFFFFD700), // Gold
-      const Color(0xFF388E3C), // Dark Green
-      const Color(0xFF1976D2), // Dark Blue
-    ];
-    
-    final windowColors = [
-      const Color(0xFFFFA500), // Orange
-      const Color(0xFFFFEB3B), // Yellow
-      const Color(0xFF00BCD4), // Cyan
+    // Energy Wave Patterns
+    final waveColors = [
+      const Color(0xFF00E5FF), // Cyan
+      const Color(0xFF1DE9B6), // Teal
+      const Color(0xFF76FF03), // Light Green
     ];
 
-    // Draw animated buildings
+    // Draw flowing energy waves
     for (int i = 0; i < 3; i++) {
-      final baseX =
-          size.width * (0.1 + i * 0.15) +
-          80 * math.sin(animationValue * 0.8 * math.pi + i * 0.5);
-      final baseY = size.height * (0.3 + i * 0.1);
-
-      // Building base with different colors
-      final buildingPaint = Paint()
-        ..color = buildingColors[i].withOpacity(0.3)
-        ..style = PaintingStyle.fill;
-
-      final outlinePaint = Paint()
-        ..color = outlineColors[i].withOpacity(0.6)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.0;
-
-      final buildingRect = Rect.fromLTWH(
-        baseX % size.width,
-        baseY,
-        35 + i * 5,
-        60 + i * 15,
+      final waveX = size.width * (0.1 + i * 0.3);
+      final waveY = size.height * (0.2 + i * 0.2);
+      
+      _drawEnergyWave(
+        canvas,
+        Offset(waveX, waveY),
+        size.width * 0.4,
+        animationValue + i * 0.3,
+        waveColors[i],
       );
-      canvas.drawRect(buildingRect, buildingPaint);
-      canvas.drawRect(buildingRect, outlinePaint);
-
-      // Building windows with different colors
-      final windowPaint = Paint()
-        ..color = windowColors[i].withOpacity(0.7)
-        ..style = PaintingStyle.fill;
-
-      for (int row = 0; row < 3; row++) {
-        for (int col = 0; col < 2; col++) {
-          final windowRect = Rect.fromLTWH(
-            baseX % size.width + 8 + col * 12,
-            baseY + 10 + row * 15,
-            6,
-            8,
-          );
-          canvas.drawRect(windowRect, windowPaint);
-        }
-      }
     }
 
-    // Draw animated house icons with different colors
-    final houseColors = [
-      const Color(0xFFFF6B35), // Orange-red
-      const Color(0xFF9C27B0), // Purple
-    ];
-    
-    for (int i = 0; i < 2; i++) {
-      final houseX =
-          size.width * (0.2 + i * 0.2) +
-          70 * math.cos(animationValue * 1.2 * math.pi + i);
-      final houseY =
-          size.height * (0.6 + i * 0.08) +
+    // Draw vertical energy streams
+    for (int i = 0; i < 4; i++) {
+      final streamX = size.width * (0.2 + i * 0.2) +
+          30 * math.sin(animationValue * 1.5 * math.pi + i * 0.5);
+      
+      _drawEnergyStream(
+        canvas,
+        Offset(streamX % size.width, 0),
+        size.height,
+        animationValue + i * 0.25,
+        waveColors[i % 3],
+      );
+    }
+
+    // Draw floating energy circles
+    for (int i = 0; i < 4; i++) {
+      final circleX =
+          size.width * (0.15 + i * 0.2) +
+          70 * math.cos(animationValue * 1.2 * math.pi + i * 0.5);
+      final circleY =
+          size.height * (0.5 + i * 0.1) +
           30 * math.sin(animationValue * 1.5 * math.pi + i * 0.8);
 
-      _drawHouse(
+      _drawEnergyCircle(
         canvas,
-        Offset(houseX % size.width, houseY % size.height),
-        25.0,
-        houseColors[i],
+        Offset(circleX % size.width, circleY % size.height),
+        20.0 + i * 5,
+        animationValue + i * 0.3,
+        waveColors[i % 3],
       );
     }
 
-    // Draw animated key icons
-    for (int i = 0; i < 2; i++) {
-      final keyX =
-          size.width * (0.7 + i * 0.1) +
+    // Draw pulsing energy orbs
+    for (int i = 0; i < 3; i++) {
+      final orbX =
+          size.width * (0.65 + i * 0.15) +
           50 * math.sin(animationValue * 2 * math.pi + i * 1.2);
-      final keyY =
-          size.height * (0.2 + i * 0.2) +
+      final orbY =
+          size.height * (0.15 + i * 0.25) +
           25 * math.cos(animationValue * 1.8 * math.pi + i);
 
-      _drawKey(canvas, Offset(keyX % size.width, keyY % size.height), 15.0);
+      _drawEnergyOrb(
+        canvas,
+        Offset(orbX % size.width, orbY % size.height),
+        12.0 + i * 3,
+        animationValue + i * 0.4,
+        waveColors[i % 3],
+      );
     }
 
-    // Draw property percentage symbols
-    for (int i = 0; i < 3; i++) {
-      final symbolX =
-          size.width * (0.05 + i * 0.18) +
-          40 * math.sin(animationValue * 1.3 * math.pi + i * 0.6);
-      final symbolY =
-          size.height * (0.8 + i * 0.03) +
-          20 * math.cos(animationValue * 1.6 * math.pi + i * 0.4);
+    // Draw additional flowing energy waves
+    for (int i = 0; i < 5; i++) {
+      final waveX = size.width * (0.1 + i * 0.2);
+      final waveY = size.height * (0.7 + i * 0.05) +
+          15 * math.sin(animationValue * 1.3 * math.pi + i * 0.6);
 
-      _drawPercentSymbol(
+      _drawEnergyWave(
         canvas,
-        Offset(symbolX % size.width, symbolY % size.height),
+        Offset(waveX, waveY % size.height),
+        size.width * 0.25,
+        animationValue * 1.5 + i * 0.4,
+        waveColors[i % 3],
+      );
+    }
+
+    // Draw diagonal energy streams
+    for (int i = 0; i < 3; i++) {
+      final startX = size.width * (0.1 + i * 0.4);
+      final startY = size.height * 0.1;
+      
+      _drawDiagonalEnergyStream(
+        canvas,
+        Offset(startX, startY),
+        size.width * 0.3,
+        size.height * 0.4,
+        animationValue + i * 0.5,
+        waveColors[i % 3],
       );
     }
   }
@@ -1839,6 +1828,188 @@ class ParticlesPainter extends CustomPainter {
 
     canvas.drawPath(path, pentagonPaint);
     canvas.drawPath(path, outlinePaint);
+  }
+
+  void _drawDiagonalEnergyStream(Canvas canvas, Offset start, double width, double height, double phase, Color color) {
+    final paint = Paint()
+      ..color = color.withOpacity(0.5)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.5;
+
+    final path = Path();
+    final amplitude = 10.0;
+    final frequency = 0.04;
+    
+    for (double t = 0; t <= 1.0; t += 0.02) {
+      final x = start.dx + (width * t) + amplitude * math.sin((t * 10 + phase * 2 * math.pi));
+      final y = start.dy + (height * t) + amplitude * math.cos((t * 8 + phase * 2 * math.pi));
+      
+      if (t == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+    
+    canvas.drawPath(path, paint);
+    
+    // Add flowing particles
+    for (double t = 0; t <= 1.0; t += 0.15) {
+      final x = start.dx + (width * t) + amplitude * math.sin((t * 10 + phase * 2 * math.pi));
+      final y = start.dy + (height * t) + amplitude * math.cos((t * 8 + phase * 2 * math.pi));
+      
+      final particlePaint = Paint()
+        ..color = color.withOpacity(0.9)
+        ..style = PaintingStyle.fill;
+      
+      final particleSize = 1.5 + 0.5 * math.sin(phase * 3 * math.pi + t * 5);
+      canvas.drawCircle(Offset(x, y), particleSize, particlePaint);
+    }
+  }
+
+  void _drawEnergyOrb(Canvas canvas, Offset center, double radius, double phase, Color color) {
+    // Draw outer pulsing aura
+    final auraPaint = Paint()
+      ..color = color.withOpacity(0.2)
+      ..style = PaintingStyle.fill
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6.0);
+    
+    final auraRadius = radius * (1.5 + 0.3 * math.sin(phase * 3 * math.pi));
+    canvas.drawCircle(center, auraRadius, auraPaint);
+    
+    // Draw main orb with gradient effect
+    final orbPaint = Paint()
+      ..color = color.withOpacity(0.8)
+      ..style = PaintingStyle.fill;
+    
+    final mainRadius = radius * (1.0 + 0.1 * math.sin(phase * 4 * math.pi));
+    canvas.drawCircle(center, mainRadius, orbPaint);
+    
+    // Draw bright core
+    final corePaint = Paint()
+      ..color = Colors.white.withOpacity(0.9)
+      ..style = PaintingStyle.fill;
+    
+    final coreRadius = radius * 0.4;
+    canvas.drawCircle(center, coreRadius, corePaint);
+    
+    // Draw energy sparks
+    for (int i = 0; i < 4; i++) {
+      final sparkAngle = (i * math.pi / 2) + (phase * 2 * math.pi);
+      final sparkDistance = mainRadius + 8 + 4 * math.sin(phase * 5 * math.pi + i);
+      final sparkX = center.dx + sparkDistance * math.cos(sparkAngle);
+      final sparkY = center.dy + sparkDistance * math.sin(sparkAngle);
+      
+      final sparkPaint = Paint()
+        ..color = color.withOpacity(0.9)
+        ..style = PaintingStyle.fill;
+      
+      canvas.drawCircle(Offset(sparkX, sparkY), 1.5, sparkPaint);
+    }
+  }
+
+  void _drawEnergyCircle(Canvas canvas, Offset center, double radius, double phase, Color color) {
+    // Draw outer glow ring
+    final glowPaint = Paint()
+      ..color = color.withOpacity(0.3)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8.0
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0);
+    
+    final animatedRadius = radius + 5 * math.sin(phase * 2 * math.pi);
+    canvas.drawCircle(center, animatedRadius, glowPaint);
+    
+    // Draw main energy circle
+    final mainPaint = Paint()
+      ..color = color.withOpacity(0.7)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0;
+    
+    canvas.drawCircle(center, animatedRadius * 0.8, mainPaint);
+    
+    // Draw inner pulsing core
+    final corePaint = Paint()
+      ..color = color.withOpacity(0.9)
+      ..style = PaintingStyle.fill;
+    
+    final coreRadius = (radius * 0.3) + 3 * math.sin(phase * 3 * math.pi);
+    canvas.drawCircle(center, coreRadius, corePaint);
+    
+    // Draw energy particles around the circle
+    for (int i = 0; i < 6; i++) {
+      final angle = (i * 2 * math.pi / 6) + (phase * 2 * math.pi);
+      final particleX = center.dx + (animatedRadius + 10) * math.cos(angle);
+      final particleY = center.dy + (animatedRadius + 10) * math.sin(angle);
+      
+      final particlePaint = Paint()
+        ..color = color.withOpacity(0.8)
+        ..style = PaintingStyle.fill;
+      
+      canvas.drawCircle(Offset(particleX, particleY), 2.0, particlePaint);
+    }
+  }
+
+  void _drawEnergyWave(Canvas canvas, Offset center, double width, double phase, Color color) {
+    final paint = Paint()
+      ..color = color.withOpacity(0.6)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0;
+
+    final path = Path();
+    final amplitude = 20.0;
+    final frequency = 0.02;
+    
+    for (double x = 0; x <= width; x += 2) {
+      final y = center.dy + amplitude * math.sin((x * frequency + phase * 2 * math.pi));
+      if (x == 0) {
+        path.moveTo(center.dx + x - width / 2, y);
+      } else {
+        path.lineTo(center.dx + x - width / 2, y);
+      }
+    }
+    
+    canvas.drawPath(path, paint);
+    
+    // Add glow effect
+    final glowPaint = Paint()
+      ..color = color.withOpacity(0.3)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 6.0
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0);
+    
+    canvas.drawPath(path, glowPaint);
+  }
+
+  void _drawEnergyStream(Canvas canvas, Offset start, double height, double phase, Color color) {
+    final paint = Paint()
+      ..color = color.withOpacity(0.4)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    final path = Path();
+    final amplitude = 15.0;
+    final frequency = 0.03;
+    
+    for (double y = 0; y <= height; y += 3) {
+      final x = start.dx + amplitude * math.sin((y * frequency + phase * 2 * math.pi));
+      if (y == 0) {
+        path.moveTo(x, start.dy + y);
+      } else {
+        path.lineTo(x, start.dy + y);
+      }
+    }
+    
+    canvas.drawPath(path, paint);
+    
+    // Add particles along the stream
+    for (double y = 0; y <= height; y += 40) {
+      final x = start.dx + amplitude * math.sin((y * frequency + phase * 2 * math.pi));
+      final particlePaint = Paint()
+        ..color = color.withOpacity(0.8)
+        ..style = PaintingStyle.fill;
+      
+      canvas.drawCircle(Offset(x, start.dy + y), 2.0, particlePaint);
+    }
   }
 
   @override
