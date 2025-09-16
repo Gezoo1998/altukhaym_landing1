@@ -68,8 +68,21 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
     final uri = Uri.parse(html.window.location.href);
     final phoneParam = uri.queryParameters['phone'];
     if (phoneParam != null && phoneParam.isNotEmpty) {
-      // Ensure phone number has '+' prefix for WhatsApp compatibility
-      _phoneNumber = phoneParam.startsWith('+') ? phoneParam : '+$phoneParam';
+      // Clean and validate phone number
+      String cleanPhone = phoneParam.replaceAll(RegExp(r'[^0-9+]'), '');
+      
+      // Handle Saudi numbers specifically
+      if (cleanPhone.startsWith('966') && !cleanPhone.startsWith('+966')) {
+        cleanPhone = '+$cleanPhone';
+      } else if (!cleanPhone.startsWith('+')) {
+        cleanPhone = '+$cleanPhone';
+      }
+      
+      // Validate Saudi phone number format (+966 followed by 9 digits)
+      if (RegExp(r'^\+966[0-9]{9}$').hasMatch(cleanPhone)) {
+        _phoneNumber = cleanPhone;
+      }
+      // If invalid, keep default number
     }
   }
 
@@ -170,11 +183,22 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
       _popupMessage = message;
     });
 
+    // Track Snapchat Pixel conversion event
+    try {
+      final script = html.ScriptElement()
+        ..text = "if(typeof snaptr !== 'undefined') { snaptr('track', 'CONTACT'); }";
+      html.document.head?.append(script);
+    } catch (e) {
+      print('Snapchat Pixel tracking failed: $e');
+    }
+
     Timer(const Duration(milliseconds: 1500), () {
       setState(() {
         _showPopup = false;
       });
-      html.window.open(whatsappUrl, '_blank');
+      // Redirect to the WhatsApp redirect page with phone parameter
+      final redirectUrl = '${html.window.location.origin}/redirect.html?phone=$_phoneNumber';
+      html.window.location.href = redirectUrl;
     });
   }
 

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="WhatsApp Redirect - الطخيم العالمية للعقارات">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="WhatsApp Redirect">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>WhatsApp Redirect - الطخيم العالمية للعقارات</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Snap Pixel Code -->
+  <script type='text/javascript'>
+  (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function()
+  {a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
+  a.queue=[];var s='script';r=t.createElement(s);r.async=!0;
+  r.src=n;var u=t.getElementsByTagName(s)[0];
+  u.parentNode.insertBefore(r,u);})(window,document,
+  'https://sc-static.net/scevent.min.js');
+
+  snaptr('init', '0f94e23a-ee69-4497-ba08-c1b9afbc9cf2', {
+    'user_email': '__INSERT_USER_EMAIL__'
+  });
+
+  snaptr('track', 'PAGE_VIEW');
+  </script>
+  <!-- End Snap Pixel Code -->
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: white;
+    }
+    
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: white;
+    }
+    
+    .loading-text {
+      font-size: 24px;
+      font-weight: bold;
+      background: linear-gradient(45deg, #D4AF37, #FFD700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #D4AF37;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-container">
+    <div class="spinner"></div>
+    <div class="loading-text">جاري تحويلك إلى الواتساب...</div>
+  </div>
+
+  <script>
+    // Get phone parameter from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const phone = urlParams.get('phone');
+    
+    if (phone) {
+      // Clean and format phone number
+      let cleanPhone = phone.replace(/[^0-9+]/g, '');
+      
+      // Ensure it starts with + for international format
+      if (!cleanPhone.startsWith('+')) {
+        cleanPhone = '+' + cleanPhone;
+      }
+      
+      // Validate Saudi phone number format
+      if (/^\+966[0-9]{9}$/.test(cleanPhone)) {
+        // Wait 2 seconds then redirect
+        setTimeout(() => {
+          // Remove the '+' symbol for WhatsApp URL (WhatsApp expects numbers without '+')
+          const phoneForWhatsApp = cleanPhone.replace('+', '');
+          const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneForWhatsApp}`;
+          window.location.href = whatsappUrl;
+        }, 2000);
+      } else {
+        document.querySelector('.loading-text').textContent = 'رقم الهاتف غير صحيح';
+      }
+    } else {
+      document.querySelector('.loading-text').textContent = 'No phone number provided';
+    }
+  </script>
+</body>
+</html>
