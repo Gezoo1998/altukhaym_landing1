@@ -1367,109 +1367,11 @@ class ParticlesPainter extends CustomPainter {
       ..color = const Color(0xFFFFD700).withOpacity(0.4)
       ..style = PaintingStyle.fill;
 
-    // Draw floating golden particles
-    for (int i = 0; i < 12; i++) {
-      final x =
-          (size.width * (i * 0.08 + 0.1)) +
-          60 * math.sin(animationValue * 1.5 * math.pi + i);
-      final y =
-          (size.height * (i * 0.04 + 0.1)) +
-          40 * math.cos(animationValue * 1.8 * math.pi + i * 0.7);
 
-      // Add glow effect to particles
-      final glowPaint = Paint()
-        ..color = const Color(0xFFFFD700).withOpacity(0.2)
-        ..style = PaintingStyle.fill;
 
-      canvas.drawCircle(
-        Offset(x % size.width, y % size.height),
-        3.0 + math.sin(animationValue * 3 * math.pi + i) * 1.5,
-        glowPaint,
-      );
 
-      canvas.drawCircle(
-        Offset(x % size.width, y % size.height),
-        1.5 + math.sin(animationValue * 3 * math.pi + i) * 0.8,
-        paint,
-      );
-    }
 
-    // Draw floating stars
-    for (int i = 0; i < 8; i++) {
-      final starX =
-          size.width * (0.1 + i * 0.06) +
-          80 * math.cos(animationValue * 0.9 * math.pi + i * 0.4);
-      final starY =
-          size.height * (0.15 + i * 0.05) +
-          50 * math.sin(animationValue * 1.1 * math.pi + i * 0.6);
 
-      _drawStar(
-        canvas,
-        Offset(starX % size.width, starY % size.height),
-        12.0 + math.sin(animationValue * 2 * math.pi + i) * 3,
-      );
-    }
-
-    // Draw floating diamonds
-    for (int i = 0; i < 4; i++) {
-      final diamondX =
-          size.width * (0.2 + i * 0.12) +
-          70 * math.sin(animationValue * 0.7 * math.pi + i * 0.8);
-      final diamondY =
-          size.height * (0.4 + i * 0.07) +
-          45 * math.cos(animationValue * 1.3 * math.pi + i * 0.5);
-
-      _drawDiamond(
-        canvas,
-        Offset(diamondX % size.width, diamondY % size.height),
-        15.0 + math.cos(animationValue * 2.5 * math.pi + i) * 4,
-      );
-    }
-
-    // Draw floating currency symbols
-    for (int i = 0; i < 3; i++) {
-      final currencyX =
-          size.width * (0.8 + i * 0.03) +
-          60 * math.cos(animationValue * 1.4 * math.pi + i * 1.1);
-      final currencyY =
-          size.height * (0.1 + i * 0.15) +
-          35 * math.sin(animationValue * 1.7 * math.pi + i * 0.7);
-
-      _drawCurrencySymbol(
-        canvas,
-        Offset(currencyX % size.width, currencyY % size.height),
-      );
-    }
-
-    // Draw floating geometric shapes
-    for (int i = 0; i < 6; i++) {
-      final shapeX =
-          size.width * (0.05 + i * 0.09) +
-          55 * math.sin(animationValue * 1.6 * math.pi + i * 0.9);
-      final shapeY =
-          size.height * (0.7 + i * 0.03) +
-          30 * math.cos(animationValue * 2.1 * math.pi + i * 0.3);
-
-      if (i % 3 == 0) {
-        _drawHexagon(
-          canvas,
-          Offset(shapeX % size.width, shapeY % size.height),
-          18.0 + math.sin(animationValue * 3 * math.pi + i) * 5,
-        );
-      } else if (i % 3 == 1) {
-        _drawTriangle(
-          canvas,
-          Offset(shapeX % size.width, shapeY % size.height),
-          20.0 + math.cos(animationValue * 2.8 * math.pi + i) * 4,
-        );
-      } else {
-        _drawPentagon(
-          canvas,
-          Offset(shapeX % size.width, shapeY % size.height),
-          16.0 + math.sin(animationValue * 2.3 * math.pi + i) * 3,
-        );
-      }
-    }
 
     // Energy Wave Patterns
     final waveColors = [
@@ -1478,99 +1380,29 @@ class ParticlesPainter extends CustomPainter {
       const Color(0xFF76FF03), // Light Green
     ];
 
-    // Draw flowing energy waves
-    for (int i = 0; i < 3; i++) {
-      final waveX = size.width * (0.1 + i * 0.3);
-      final waveY = size.height * (0.2 + i * 0.2);
-      
-      _drawEnergyWave(
-        canvas,
-        Offset(waveX, waveY),
-        size.width * 0.4,
-        animationValue + i * 0.3,
-        waveColors[i],
-      );
-    }
+
 
     // Draw vertical energy streams
-    for (int i = 0; i < 4; i++) {
-      final streamX = size.width * (0.2 + i * 0.2) +
-          30 * math.sin(animationValue * 1.5 * math.pi + i * 0.5);
+    for (int i = 0; i < 2; i++) {
+      final streamX = size.width * (0.3 + i * 0.4) +
+          20 * math.sin(animationValue * 1.2 * math.pi + i * 0.8);
       
       _drawEnergyStream(
         canvas,
         Offset(streamX % size.width, 0),
         size.height,
-        animationValue + i * 0.25,
-        waveColors[i % 3],
-      );
-    }
-
-    // Draw floating energy circles
-    for (int i = 0; i < 4; i++) {
-      final circleX =
-          size.width * (0.15 + i * 0.2) +
-          70 * math.cos(animationValue * 1.2 * math.pi + i * 0.5);
-      final circleY =
-          size.height * (0.5 + i * 0.1) +
-          30 * math.sin(animationValue * 1.5 * math.pi + i * 0.8);
-
-      _drawEnergyCircle(
-        canvas,
-        Offset(circleX % size.width, circleY % size.height),
-        20.0 + i * 5,
-        animationValue + i * 0.3,
-        waveColors[i % 3],
-      );
-    }
-
-    // Draw pulsing energy orbs
-    for (int i = 0; i < 3; i++) {
-      final orbX =
-          size.width * (0.65 + i * 0.15) +
-          50 * math.sin(animationValue * 2 * math.pi + i * 1.2);
-      final orbY =
-          size.height * (0.15 + i * 0.25) +
-          25 * math.cos(animationValue * 1.8 * math.pi + i);
-
-      _drawEnergyOrb(
-        canvas,
-        Offset(orbX % size.width, orbY % size.height),
-        12.0 + i * 3,
-        animationValue + i * 0.4,
-        waveColors[i % 3],
-      );
-    }
-
-    // Draw additional flowing energy waves
-    for (int i = 0; i < 5; i++) {
-      final waveX = size.width * (0.1 + i * 0.2);
-      final waveY = size.height * (0.7 + i * 0.05) +
-          15 * math.sin(animationValue * 1.3 * math.pi + i * 0.6);
-
-      _drawEnergyWave(
-        canvas,
-        Offset(waveX, waveY % size.height),
-        size.width * 0.25,
-        animationValue * 1.5 + i * 0.4,
-        waveColors[i % 3],
-      );
-    }
-
-    // Draw diagonal energy streams
-    for (int i = 0; i < 3; i++) {
-      final startX = size.width * (0.1 + i * 0.4);
-      final startY = size.height * 0.1;
-      
-      _drawDiagonalEnergyStream(
-        canvas,
-        Offset(startX, startY),
-        size.width * 0.3,
-        size.height * 0.4,
         animationValue + i * 0.5,
-        waveColors[i % 3],
+        waveColors[i],
       );
     }
+
+
+
+
+
+
+
+
   }
 
   void _drawHouse(Canvas canvas, Offset center, double size, [Color? houseColor]) {
@@ -1832,15 +1664,15 @@ class ParticlesPainter extends CustomPainter {
 
   void _drawDiagonalEnergyStream(Canvas canvas, Offset start, double width, double height, double phase, Color color) {
     final paint = Paint()
-      ..color = color.withOpacity(0.5)
+      ..color = color.withOpacity(0.2)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.5;
+      ..strokeWidth = 1.5;
 
     final path = Path();
-    final amplitude = 10.0;
+    final amplitude = 8.0;
     final frequency = 0.04;
     
-    for (double t = 0; t <= 1.0; t += 0.02) {
+    for (double t = 0; t <= 1.0; t += 0.03) {
       final x = start.dx + (width * t) + amplitude * math.sin((t * 10 + phase * 2 * math.pi));
       final y = start.dy + (height * t) + amplitude * math.cos((t * 8 + phase * 2 * math.pi));
       
@@ -1854,15 +1686,15 @@ class ParticlesPainter extends CustomPainter {
     canvas.drawPath(path, paint);
     
     // Add flowing particles
-    for (double t = 0; t <= 1.0; t += 0.15) {
+    for (double t = 0; t <= 1.0; t += 0.25) {
       final x = start.dx + (width * t) + amplitude * math.sin((t * 10 + phase * 2 * math.pi));
       final y = start.dy + (height * t) + amplitude * math.cos((t * 8 + phase * 2 * math.pi));
       
       final particlePaint = Paint()
-        ..color = color.withOpacity(0.9)
+        ..color = color.withOpacity(0.4)
         ..style = PaintingStyle.fill;
       
-      final particleSize = 1.5 + 0.5 * math.sin(phase * 3 * math.pi + t * 5);
+      final particleSize = 1.0 + 0.3 * math.sin(phase * 3 * math.pi + t * 5);
       canvas.drawCircle(Offset(x, y), particleSize, particlePaint);
     }
   }
@@ -1870,16 +1702,16 @@ class ParticlesPainter extends CustomPainter {
   void _drawEnergyOrb(Canvas canvas, Offset center, double radius, double phase, Color color) {
     // Draw outer pulsing aura
     final auraPaint = Paint()
-      ..color = color.withOpacity(0.2)
+      ..color = color.withOpacity(0.1)
       ..style = PaintingStyle.fill
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6.0);
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0);
     
-    final auraRadius = radius * (1.5 + 0.3 * math.sin(phase * 3 * math.pi));
+    final auraRadius = radius * (1.3 + 0.2 * math.sin(phase * 3 * math.pi));
     canvas.drawCircle(center, auraRadius, auraPaint);
     
     // Draw main orb with gradient effect
     final orbPaint = Paint()
-      ..color = color.withOpacity(0.8)
+      ..color = color.withOpacity(0.4)
       ..style = PaintingStyle.fill;
     
     final mainRadius = radius * (1.0 + 0.1 * math.sin(phase * 4 * math.pi));
@@ -1887,24 +1719,24 @@ class ParticlesPainter extends CustomPainter {
     
     // Draw bright core
     final corePaint = Paint()
-      ..color = Colors.white.withOpacity(0.9)
+      ..color = Colors.white.withOpacity(0.5)
       ..style = PaintingStyle.fill;
     
-    final coreRadius = radius * 0.4;
+    final coreRadius = radius * 0.3;
     canvas.drawCircle(center, coreRadius, corePaint);
     
     // Draw energy sparks
-    for (int i = 0; i < 4; i++) {
-      final sparkAngle = (i * math.pi / 2) + (phase * 2 * math.pi);
-      final sparkDistance = mainRadius + 8 + 4 * math.sin(phase * 5 * math.pi + i);
+    for (int i = 0; i < 3; i++) {
+      final sparkAngle = (i * 2 * math.pi / 3) + (phase * 2 * math.pi);
+      final sparkDistance = mainRadius + 6 + 3 * math.sin(phase * 4 * math.pi + i);
       final sparkX = center.dx + sparkDistance * math.cos(sparkAngle);
       final sparkY = center.dy + sparkDistance * math.sin(sparkAngle);
       
       final sparkPaint = Paint()
-        ..color = color.withOpacity(0.9)
+        ..color = color.withOpacity(0.5)
         ..style = PaintingStyle.fill;
       
-      canvas.drawCircle(Offset(sparkX, sparkY), 1.5, sparkPaint);
+      canvas.drawCircle(Offset(sparkX, sparkY), 1.0, sparkPaint);
     }
   }
 
@@ -1951,12 +1783,12 @@ class ParticlesPainter extends CustomPainter {
 
   void _drawEnergyWave(Canvas canvas, Offset center, double width, double phase, Color color) {
     final paint = Paint()
-      ..color = color.withOpacity(0.6)
+      ..color = color.withOpacity(0.25)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0;
+      ..strokeWidth = 2.0;
 
     final path = Path();
-    final amplitude = 20.0;
+    final amplitude = 15.0;
     final frequency = 0.02;
     
     for (double x = 0; x <= width; x += 2) {
@@ -1972,25 +1804,25 @@ class ParticlesPainter extends CustomPainter {
     
     // Add glow effect
     final glowPaint = Paint()
-      ..color = color.withOpacity(0.3)
+      ..color = color.withOpacity(0.15)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 6.0
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0);
+      ..strokeWidth = 4.0
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);
     
     canvas.drawPath(path, glowPaint);
   }
 
   void _drawEnergyStream(Canvas canvas, Offset start, double height, double phase, Color color) {
     final paint = Paint()
-      ..color = color.withOpacity(0.4)
+      ..color = color.withOpacity(0.2)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
+      ..strokeWidth = 1.5;
 
     final path = Path();
-    final amplitude = 15.0;
+    final amplitude = 10.0;
     final frequency = 0.03;
     
-    for (double y = 0; y <= height; y += 3) {
+    for (double y = 0; y <= height; y += 4) {
       final x = start.dx + amplitude * math.sin((y * frequency + phase * 2 * math.pi));
       if (y == 0) {
         path.moveTo(x, start.dy + y);
@@ -2002,13 +1834,13 @@ class ParticlesPainter extends CustomPainter {
     canvas.drawPath(path, paint);
     
     // Add particles along the stream
-    for (double y = 0; y <= height; y += 40) {
+    for (double y = 0; y <= height; y += 60) {
       final x = start.dx + amplitude * math.sin((y * frequency + phase * 2 * math.pi));
       final particlePaint = Paint()
-        ..color = color.withOpacity(0.8)
+        ..color = color.withOpacity(0.4)
         ..style = PaintingStyle.fill;
       
-      canvas.drawCircle(Offset(x, start.dy + y), 2.0, particlePaint);
+      canvas.drawCircle(Offset(x, start.dy + y), 1.5, particlePaint);
     }
   }
 
