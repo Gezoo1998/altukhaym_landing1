@@ -40,7 +40,7 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
   late AnimationController _particleController;
   late Animation<double> _fadeAnimation;
   late ScrollController _scrollController;
-  String _phoneNumber = '966535695919'; // Default phone number
+  String _phoneNumber = '+966535695919'; // Default phone number
 
   @override
   void initState() {
@@ -68,7 +68,8 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
     final uri = Uri.parse(html.window.location.href);
     final phoneParam = uri.queryParameters['phone'];
     if (phoneParam != null && phoneParam.isNotEmpty) {
-      _phoneNumber = phoneParam;
+      // Ensure phone number has '+' prefix for WhatsApp compatibility
+      _phoneNumber = phoneParam.startsWith('+') ? phoneParam : '+$phoneParam';
     }
   }
 
