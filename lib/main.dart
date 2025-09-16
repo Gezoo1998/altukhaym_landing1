@@ -497,25 +497,36 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
                         },
                       ),
                       const SizedBox(height: 20),
-                      // Slogan
-                      Text(
-                        _getTexts()['slogan']!,
-                        style: GoogleFonts.cairo(
-                          fontSize: MediaQuery.of(context).size.width > 600
-                              ? 26
-                              : 20,
-                          color: const Color(0xFF8B4513),
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 1.5,
-                          shadows: [
-                            Shadow(
-                              offset: const Offset(1, 1),
-                              blurRadius: 3,
-                              color: Colors.black.withOpacity(0.2),
-                            ),
+                      // Slogan with gradient white
+                      ShaderMask(
+                        shaderCallback: (bounds) => const LinearGradient(
+                          colors: [
+                            Colors.white,
+                            Color(0xFFF5F5F5),
+                            Color(0xFFE8E8E8),
                           ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ).createShader(bounds),
+                        child: Text(
+                          _getTexts()['slogan']!,
+                          style: GoogleFonts.cairo(
+                            fontSize: MediaQuery.of(context).size.width > 600
+                                ? 26
+                                : 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 1.5,
+                            shadows: [
+                              Shadow(
+                                offset: const Offset(1, 1),
+                                blurRadius: 3,
+                                color: Colors.black.withOpacity(0.3),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 10),
                       Container(
@@ -535,28 +546,39 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
-                      Text(
-                        'تواصل مع مستشارينا العقاريين',
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width > 600
-                              ? 34
-                              : 28,
-                          fontWeight: FontWeight.w800,
-                          color: const Color(0xFF2C1810),
-                          shadows: [
-                            Shadow(
-                              offset: const Offset(0, 0),
-                              blurRadius: 15,
-                              color: const Color(0xFFFFD700).withOpacity(0.6),
-                            ),
-                            Shadow(
-                              offset: const Offset(1, 1),
-                              blurRadius: 3,
-                              color: Colors.black.withOpacity(0.3),
-                            ),
+                      ShaderMask(
+                        shaderCallback: (bounds) => const LinearGradient(
+                          colors: [
+                            Colors.white,
+                            Color(0xFFF5F5F5),
+                            Color(0xFFE8E8E8),
                           ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ).createShader(bounds),
+                        child: Text(
+                          'تواصل مع مستشارينا العقاريين',
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width > 600
+                                ? 34
+                                : 28,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                offset: const Offset(0, 0),
+                                blurRadius: 15,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                              Shadow(
+                                offset: const Offset(1, 1),
+                                blurRadius: 3,
+                                color: Colors.black.withOpacity(0.3),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 80),
                       // WhatsApp buttons
@@ -604,23 +626,39 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
-                      Text(
-                        'خدماتنا العقارية المتميزة',
-                        style: GoogleFonts.cairo(
-                          fontSize: MediaQuery.of(context).size.width > 600
-                              ? 34
-                              : 28,
-                          fontWeight: FontWeight.w800,
-                          color: const Color(0xFF2C1810),
-                          shadows: [
-                            Shadow(
-                              offset: const Offset(0, 0),
-                              blurRadius: 12,
-                              color: const Color(0xFFFFD700).withOpacity(0.5),
-                            ),
+                      ShaderMask(
+                        shaderCallback: (bounds) => const LinearGradient(
+                          colors: [
+                            Colors.white,
+                            Color(0xFFF5F5F5),
+                            Color(0xFFE8E8E8),
                           ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ).createShader(bounds),
+                        child: Text(
+                          'خدماتنا العقارية المتميزة',
+                          style: GoogleFonts.cairo(
+                            fontSize: MediaQuery.of(context).size.width > 600
+                                ? 34
+                                : 28,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                offset: const Offset(0, 0),
+                                blurRadius: 15,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                              Shadow(
+                                offset: const Offset(1, 1),
+                                blurRadius: 3,
+                                color: Colors.black.withOpacity(0.3),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 40),
                       // Property cards
@@ -774,26 +812,40 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
                         margin: const EdgeInsets.only(bottom: 40),
                         child: Column(
                           children: [
-                            Text(
-                              'تواصل معنا',
-                              style: GoogleFonts.cairo(
-                                fontSize:
-                                    MediaQuery.of(context).size.width > 600
-                                    ? 32
-                                    : 26,
-                                fontWeight: FontWeight.w800,
-                                color: const Color(0xFF2C1810),
-                                shadows: [
-                                  Shadow(
-                                    offset: const Offset(0, 0),
-                                    blurRadius: 12,
-                                    color: const Color(
-                                      0xFFFFD700,
-                                    ).withOpacity(0.5),
-                                  ),
+                            ShaderMask(
+                              shaderCallback: (bounds) => const LinearGradient(
+                                colors: [
+                                  Colors.white,
+                                  Color(0xFFF5F5F5),
+                                  Color(0xFFE8E8E8),
                                 ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ).createShader(bounds),
+                              child: Text(
+                                'تواصل معنا',
+                                style: GoogleFonts.cairo(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width > 600
+                                      ? 32
+                                      : 26,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                  shadows: [
+                                    Shadow(
+                                      offset: const Offset(0, 0),
+                                      blurRadius: 15,
+                                      color: Colors.black.withOpacity(0.4),
+                                    ),
+                                    Shadow(
+                                      offset: const Offset(1, 1),
+                                      blurRadius: 3,
+                                      color: Colors.black.withOpacity(0.3),
+                                    ),
+                                  ],
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 10),
                             Container(
@@ -1419,15 +1471,24 @@ class ParticlesPainter extends CustomPainter {
       }
     }
 
-    // Real Estate Objects
-    final buildingPaint = Paint()
-      ..color = const Color(0xFFFFD700).withOpacity(0.3)
-      ..style = PaintingStyle.fill;
-
-    final outlinePaint = Paint()
-      ..color = const Color(0xFFFFD700).withOpacity(0.6)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
+    // Real Estate Objects with different colors
+    final buildingColors = [
+      const Color(0xFFFFD700), // Gold
+      const Color(0xFF4CAF50), // Green
+      const Color(0xFF2196F3), // Blue
+    ];
+    
+    final outlineColors = [
+      const Color(0xFFFFD700), // Gold
+      const Color(0xFF388E3C), // Dark Green
+      const Color(0xFF1976D2), // Dark Blue
+    ];
+    
+    final windowColors = [
+      const Color(0xFFFFA500), // Orange
+      const Color(0xFFFFEB3B), // Yellow
+      const Color(0xFF00BCD4), // Cyan
+    ];
 
     // Draw animated buildings
     for (int i = 0; i < 3; i++) {
@@ -1436,7 +1497,16 @@ class ParticlesPainter extends CustomPainter {
           80 * math.sin(animationValue * 0.8 * math.pi + i * 0.5);
       final baseY = size.height * (0.3 + i * 0.1);
 
-      // Building base
+      // Building base with different colors
+      final buildingPaint = Paint()
+        ..color = buildingColors[i].withOpacity(0.3)
+        ..style = PaintingStyle.fill;
+
+      final outlinePaint = Paint()
+        ..color = outlineColors[i].withOpacity(0.6)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.0;
+
       final buildingRect = Rect.fromLTWH(
         baseX % size.width,
         baseY,
@@ -1446,9 +1516,9 @@ class ParticlesPainter extends CustomPainter {
       canvas.drawRect(buildingRect, buildingPaint);
       canvas.drawRect(buildingRect, outlinePaint);
 
-      // Building windows
+      // Building windows with different colors
       final windowPaint = Paint()
-        ..color = const Color(0xFFFFA500).withOpacity(0.7)
+        ..color = windowColors[i].withOpacity(0.7)
         ..style = PaintingStyle.fill;
 
       for (int row = 0; row < 3; row++) {
@@ -1464,7 +1534,12 @@ class ParticlesPainter extends CustomPainter {
       }
     }
 
-    // Draw animated house icons
+    // Draw animated house icons with different colors
+    final houseColors = [
+      const Color(0xFFFF6B35), // Orange-red
+      const Color(0xFF9C27B0), // Purple
+    ];
+    
     for (int i = 0; i < 2; i++) {
       final houseX =
           size.width * (0.2 + i * 0.2) +
@@ -1477,6 +1552,7 @@ class ParticlesPainter extends CustomPainter {
         canvas,
         Offset(houseX % size.width, houseY % size.height),
         25.0,
+        houseColors[i],
       );
     }
 
@@ -1508,13 +1584,14 @@ class ParticlesPainter extends CustomPainter {
     }
   }
 
-  void _drawHouse(Canvas canvas, Offset center, double size) {
+  void _drawHouse(Canvas canvas, Offset center, double size, [Color? houseColor]) {
+    final baseColor = houseColor ?? const Color(0xFFFF6B35);
     final housePaint = Paint()
-      ..color = const Color(0xFFFF6B35).withOpacity(0.4)
+      ..color = baseColor.withOpacity(0.4)
       ..style = PaintingStyle.fill;
 
     final outlinePaint = Paint()
-      ..color = const Color(0xFFFFD700).withOpacity(0.8)
+      ..color = baseColor.withOpacity(0.8)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
