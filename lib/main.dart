@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:html' as html;
 import 'dart:async';
 import 'dart:math' as math;
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const LuxuryRealEstateApp());
@@ -70,14 +71,14 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
     if (phoneParam != null && phoneParam.isNotEmpty) {
       // Clean and validate phone number
       String cleanPhone = phoneParam.replaceAll(RegExp(r'[^0-9+]'), '');
-      
+
       // Handle Saudi numbers specifically
       if (cleanPhone.startsWith('966') && !cleanPhone.startsWith('+966')) {
         cleanPhone = '+$cleanPhone';
       } else if (!cleanPhone.startsWith('+')) {
         cleanPhone = '+$cleanPhone';
       }
-      
+
       // Validate Saudi phone number format (+966 followed by 9 digits)
       if (RegExp(r'^\+966[0-9]{9}$').hasMatch(cleanPhone)) {
         _phoneNumber = cleanPhone;
@@ -186,18 +187,20 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
     // Track Snapchat Pixel conversion event
     try {
       final script = html.ScriptElement()
-        ..text = "if(typeof snaptr !== 'undefined') { snaptr('track', 'CONTACT'); }";
+        ..text =
+            "if(typeof snaptr !== 'undefined') { snaptr('track', 'CONTACT'); }";
       html.document.head?.append(script);
     } catch (e) {
       print('Snapchat Pixel tracking failed: $e');
     }
 
-    Timer(const Duration(milliseconds: 1500), () {
+    Timer(const Duration(milliseconds: 1000), () {
       setState(() {
         _showPopup = false;
       });
       // Redirect to the WhatsApp redirect page with phone parameter
-      final redirectUrl = '${html.window.location.origin}/redirect.html?phone=$_phoneNumber';
+      final redirectUrl =
+          '${html.window.location.origin}/redirect.html?phone=$_phoneNumber';
       html.window.location.href = redirectUrl;
     });
   }
@@ -1294,82 +1297,142 @@ class _LuxuryLandingPageState extends State<LuxuryLandingPage>
     String subtitle,
     Color accentColor,
   ) {
-    return Container(
-      padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Colors.white, const Color(0xFFFFFDF5).withOpacity(0.95)],
+    return InkWell(
+      onTap: () => _handleContactAction(icon, value),
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        padding: const EdgeInsets.all(25),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.white, const Color(0xFFFFFDF5).withOpacity(0.95)],
+          ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: accentColor.withOpacity(0.2), width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: accentColor.withOpacity(0.1),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: accentColor.withOpacity(0.2), width: 1.5),
-        boxShadow: [
-          BoxShadow(
-            color: accentColor.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          // Icon with animated background
-          Container(
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  accentColor.withOpacity(0.1),
-                  accentColor.withOpacity(0.05),
-                ],
+        child: Column(
+          children: [
+            // Icon with animated background
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    accentColor.withOpacity(0.1),
+                    accentColor.withOpacity(0.05),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(
+                  color: accentColor.withOpacity(0.3),
+                  width: 1,
+                ),
               ),
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: accentColor.withOpacity(0.3), width: 1),
+              child: Icon(icon, color: accentColor, size: 32),
             ),
-            child: Icon(icon, color: accentColor, size: 32),
-          ),
-          const SizedBox(height: 20),
-          // Title
-          Text(
-            title,
-            style: GoogleFonts.cairo(
-              fontSize: MediaQuery.of(context).size.width > 600 ? 18 : 16,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF2C1810),
+            const SizedBox(height: 20),
+            // Title
+            Text(
+              title,
+              style: GoogleFonts.cairo(
+                fontSize: MediaQuery.of(context).size.width > 600 ? 18 : 16,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xFF2C1810),
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
-          // Value
-          Text(
-            value,
-            style: GoogleFonts.cairo(
-              fontSize: MediaQuery.of(context).size.width > 600 ? 15 : 14,
-              fontWeight: FontWeight.w600,
-              color: accentColor,
+            const SizedBox(height: 8),
+            // Value
+            Text(
+              value,
+              style: GoogleFonts.cairo(
+                fontSize: MediaQuery.of(context).size.width > 600 ? 15 : 14,
+                fontWeight: FontWeight.w600,
+                color: accentColor,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 6),
-          // Subtitle
-          Text(
-            subtitle,
-            style: GoogleFonts.cairo(
-              fontSize: MediaQuery.of(context).size.width > 600 ? 13 : 12,
-              fontWeight: FontWeight.w400,
-              color: const Color(0xFF666666),
+            const SizedBox(height: 6),
+            // Subtitle
+            Text(
+              subtitle,
+              style: GoogleFonts.cairo(
+                fontSize: MediaQuery.of(context).size.width > 600 ? 13 : 12,
+                fontWeight: FontWeight.w400,
+                color: const Color(0xFF666666),
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  // Handle contact actions (email, phone, location)
+  void _handleContactAction(IconData icon, String value) async {
+    try {
+      Uri uri;
+
+      if (icon == Icons.email_rounded) {
+        // Handle email
+        uri = Uri.parse('mailto:$value');
+      } else if (icon == Icons.phone_rounded) {
+        // Handle phone call
+        uri = Uri.parse('tel:$value');
+      } else if (icon == Icons.location_on_rounded) {
+        // Handle location (open in maps) - Use specific company location
+        uri = Uri.parse('https://maps.app.goo.gl/VSVUbKJGwcizZDKa8');
+      } else {
+        return; // Unknown icon type
+      }
+
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        // Fallback: show a snackbar with the contact info
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                icon == Icons.email_rounded
+                    ? 'البريد الإلكتروني: $value'
+                    : icon == Icons.phone_rounded
+                    ? 'رقم الهاتف: $value'
+                    : 'الموقع: $value',
+                style: GoogleFonts.cairo(),
+              ),
+              backgroundColor: const Color(0xFFFFD700),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // Error handling
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('حدث خطأ في فتح التطبيق', style: GoogleFonts.cairo()),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
   }
 }
 
